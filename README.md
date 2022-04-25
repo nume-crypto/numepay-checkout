@@ -1,5 +1,6 @@
 # nume-npm
 
+```js
 const payload = {
 	merchantId: 4,
 	referenceId: 'ref',
@@ -12,3 +13,4 @@ const payload = {
 	],
 };
 const res = await checkoutWithNume(payload);
+```
