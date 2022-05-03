@@ -10,7 +10,7 @@ const checkoutWithNume = async (payload) => {
 
         const top = window.top.outerHeight / 2 + window.top.screenY - 750 / 2;
         const left = window.top.outerWidth / 2 + window.top.screenX - 750 / 2;
-        let numeCheckoutUrl = "https://master--charming-bunny-9c79df.netlify.app"
+        let numeCheckoutUrl = "https://charming-bunny-9c79df.netlify.app"
         let newWindow = window.open(
             `${numeCheckoutUrl}/${response.data.message.OrderId}`,
             'nume',
