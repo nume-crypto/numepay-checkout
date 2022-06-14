@@ -1,11 +1,29 @@
 const axios = require('axios');
+
+const authorize = async (clientId, clientSecret) => {
+    let backendAPI = "http://44.201.174.127:3000/api/merchant/oauth/token";
+    const response = await axios({
+        method: "post",
+        url: backendAPI,
+        data: {},
+        auth: {
+            username: clientId,
+            password: clientSecret,
+        },
+    });
+    return response.data.message.AccessToken
+};
+
 const checkoutWithNume = async (payload) => {
     try {
         let backendAPI = "http://44.201.174.127:3000/api/create-transaction"
+        let accessToken = payload.accessToken
+        delete payload.accessToken
         const response = await axios({
             method: 'post',
             url: backendAPI,
             data: payload,
+            headers: {"Authorization" : `Bearer ${accessToken}`}
         });
 
         const top = window.top.outerHeight / 2 + window.top.screenY - 750 / 2;
@@ -42,4 +60,4 @@ const checkoutWithNume = async (payload) => {
     }
 };
 
-module.exports = checkoutWithNume
+module.exports = {authorize, checkoutWithNume}
