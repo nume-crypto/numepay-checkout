@@ -1,5 +1,5 @@
 const axios = require('axios');
-const API_URL = 'https://dev.api.numecrypto.com/api';
+const API_URL = 'https://dev.api.numecrypto.com/api/';
 const CHECKOUT_URL = "https://dev.checkout.numecrypto.com/"
 
 const authorize = async (clientId, clientSecret) => {
@@ -21,7 +21,7 @@ const checkoutWithNume = async (payload) => {
 		delete payload.accessToken;
 		const response = await axios({
 			method: 'post',
-			url: `${API_URL}merchant//create-transaction`,
+			url: `${API_URL}merchant/create-transaction`,
 			data: payload,
 			headers: { Authorization: `Bearer ${accessToken}` },
 		});

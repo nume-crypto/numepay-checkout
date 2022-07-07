@@ -1,6 +1,6 @@
 {
     "name": "nume-pay",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "description": "SDK to checkout with nume",
     "main": "index.js",
     "scripts": {
