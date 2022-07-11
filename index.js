@@ -1,36 +1,41 @@
-const axios = require('axios');
 const API_URL = 'https://dev.api.numecrypto.com/api/';
-const CHECKOUT_URL = "https://dev.checkout.numecrypto.com/"
+const CHECKOUT_URL = 'https://dev.checkout.numecrypto.com/';
 
 const authorize = async (clientId, clientSecret) => {
-	const response = await axios({
-		method: 'post',
-		url: `${API_URL}merchant/oauth/token`,
-		data: {},
-		auth: {
-			username: clientId,
-			password: clientSecret,
+	let url = `${API_URL}merchant/oauth/token`;
+	let options = {
+		method: 'POST',
+		headers: {
+			Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
 		},
-	});
-	return response.data.message.AccessToken;
+	};
+	console.log(options);
+	const response = await (await fetch(url, options)).json();
+	return response.message.AccessToken;
 };
-
 const checkoutWithNume = async (payload) => {
 	try {
 		let accessToken = payload.accessToken;
 		delete payload.accessToken;
-		const response = await axios({
-			method: 'post',
-			url: `${API_URL}merchant/create-transaction`,
-			data: payload,
-			headers: { Authorization: `Bearer ${accessToken}` },
-		});
+		let url = `${API_URL}merchant/create-transaction`;
+		let options = {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(payload),
+		};
 
+		let data = await (await fetch(url, options)).json();
 		const top = window.top.outerHeight / 2 + window.top.screenY - 750 / 2;
 		const left = window.top.outerWidth / 2 + window.top.screenX - 750 / 2;
 
 		let newWindow = window.open(
-			`${CHECKOUT_URL}${response.data.message.OrderId}`,
+			`${CHECKOUT_URL}${data.message.OrderId}`,
 			'nume',
 			`height=750,width=750,top=${top}, left=${left}`
 		);
@@ -39,21 +44,25 @@ const checkoutWithNume = async (payload) => {
 		}
 		return new Promise(async (accept, reject) => {
 			const handler = async (e) => {
-				if (e.origin === CHECKOUT_URL) {
+				if (CHECKOUT_URL.includes(e.origin)) {
 					try {
-						let { data } = await axios({
-							method: 'get',
-							url: `${API_URL}merchant/order-details/${response.data.message.OrderId}`,
-							data: {},
-							headers: { Authorization: `Bearer ${accessToken}` },
-						});
-						// console.log(e.data)
+						let url = `${API_URL}merchant/order-details/${data.message.OrderId}`;
+						let options = {
+							method: 'GET',
+							headers: {
+								Authorization: `Bearer ${accessToken}`,
+								Accept: 'application/json',
+								'Content-Type': 'application/json',
+							},
+						};
+
+						let response = await (await fetch(url, options)).json();
 						let res = {
-							orderId: data.message.Order.OrderId,
-							orderStatus: data.message.Order.Status,
-							amount: data.message.Order.Amount,
-							currency: data.message.Order.CurrencyId,
-							payee: data.message.Order.userId,
+							orderId: response.message.Order.OrderId,
+							orderStatus: response.message.Order.Status,
+							amount: response.message.Order.Amount,
+							currency: response.message.Order.CurrencyId,
+							payee: response.message.Order.UserId,
 						};
 						if (res.orderStatus !== 'APPROVED') {
 							reject(res);
@@ -76,4 +85,4 @@ const checkoutWithNume = async (payload) => {
 	}
 };
 
-module.exports = { authorize, checkoutWithNume };
+export { authorize, checkoutWithNume };
