@@ -1,5 +1,15 @@
 # nume-npm
 
+## Installing
+Using npm 
+```sh
+npm install nume-pay
+```
+Using jsDelivr CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/nume-pay"></script>	
+```
+### Usage
 ```js
 let accessToken = await authorize(
 			process.env.REACT_APP_NUME_CLIENT_ID,

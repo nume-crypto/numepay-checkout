@@ -85,4 +85,15 @@ const checkoutWithNume = async (payload) => {
 	}
 };
 
-export { authorize, checkoutWithNume };
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+	module.exports = { authorize, checkoutWithNume };
+} else {
+	if (typeof define === 'function' && define.amd) {
+		define([], function () {
+			return { authorize, checkoutWithNume };
+		});
+	} else {
+		window['authorize'] = authorize;
+		window['checkoutWithNume'] = checkoutWithNume;
+	}
+}
