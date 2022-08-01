@@ -1,25 +1,25 @@
 {
-    "name": "nume-pay",
-    "version": "1.0.11",
-    "description": "SDK to checkout with nume",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-        "Nume"
-    ],
-    "author": "Nume",
-    "license": "ISC",
-    "dependencies": {
-        "axios": "^0.26.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/nume-crypto/nume-npm.git"
-    },
-    "bugs": {
-        "url": "https://github.com/nume-crypto/nume-npm/issues"
-    },
-    "homepage": "https://github.com/nume-crypto/nume-npm#readme"
+	"name": "nume-pay-uat",
+	"version": "1.1.24",
+	"description": "SDK to checkout with nume",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"Nume"
+	],
+	"author": "Nume",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.26.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nume-crypto/nume-npm.git"
+	},
+	"bugs": {
+		"url": "https://github.com/nume-crypto/nume-npm/issues"
+	},
+	"homepage": "https://github.com/nume-crypto/nume-npm#readme"
 }

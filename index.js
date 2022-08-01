@@ -1,5 +1,5 @@
-const API_URL = 'https://dev.api.numecrypto.com/api/';
-const CHECKOUT_URL = 'https://dev.checkout.numecrypto.com/';
+const API_URL = 'https://uat.api.numecrypto.com/api/';
+const CHECKOUT_URL = 'https://uat.checkout.numecrypto.com/';
 
 const authorize = async (clientId, clientSecret) => {
 	let url = `${API_URL}merchant/oauth/token`;
