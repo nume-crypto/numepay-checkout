@@ -1,3 +1,4 @@
+
 const API_URL = 'https://dev.api.numecrypto.com/api/';
 const CHECKOUT_URL = 'https://dev.checkout.numecrypto.com/';
 
@@ -29,7 +30,11 @@ const checkoutWithNume = (payload) => {
 		},
 		body: JSON.stringify(payload),
 	};
-	let newWindow = window.open();
+	const height = 750
+	const width = 750
+	const top = window.top.outerHeight / 2 + window.top.screenY - height / 2;
+	const left = window.top.outerWidth / 2 + window.top.screenX - width / 2;
+	let newWindow = window.open('', '', `height=${height},width=${width},top=${top}, left=${left}`);
 	if (window.focus) {
 		newWindow.focus();
 	}
