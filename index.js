@@ -16,15 +16,22 @@ const authorize = async (clientId, clientSecret) => {
 	const response = await (await fetch(url, options)).json();
 	return response.message.AccessToken;
 };
-
 const checkoutWithNume = (payload) => {
-	let accessToken = payload.accessToken;
-	delete payload.accessToken;
-	let url = `${API_URL}merchant/create-transaction`;
-	let options = {
+	let authorizeUrl = `${API_URL}merchant/oauth/token`;
+	let authorizeOptions = {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${accessToken}`,
+			Authorization: `Basic ${btoa(`${payload.clientId}:${payload.clientSecret}`)}`,
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+	};
+	delete payload.clientId
+	delete payload.clientSecret
+	let txUrl = `${API_URL}merchant/create-transaction`;
+	let txOptions = {
+		method: 'POST',
+		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 		},
@@ -38,55 +45,64 @@ const checkoutWithNume = (payload) => {
 	if (window.focus) {
 		newWindow.focus();
 	}
-	return fetch(url, options)
+	let accessToken = ""
+	return fetch(authorizeUrl, authorizeOptions)
 		.then((res) => {
 			return res.json();
 		})
-		.then((data) => {
-			if (!newWindow) {
-				return new Promise((accept, reject) => {
-					reject('Window closed');
-				});
-			}
-			newWindow.location.assign(`${CHECKOUT_URL}${data.message.OrderId}`);
-			if (window.focus) {
-				newWindow.focus();
-			}
-			return new Promise(async (accept, reject) => {
-				const handler = async (e) => {
-					if (CHECKOUT_URL.includes(e.origin)) {
-						try {
-							let url = `${API_URL}merchant/order-details/${data.message.OrderId}`;
-							let options = {
-								method: 'GET',
-								headers: {
-									Authorization: `Bearer ${accessToken}`,
-									Accept: 'application/json',
-									'Content-Type': 'application/json',
-								},
-							};
-
-							let response = await (await fetch(url, options)).json();
-							let res = {
-								orderId: response.message.Order.OrderId,
-								orderStatus: response.message.Order.Status,
-								amount: response.message.Order.Amount,
-								currency: response.message.Order.CurrencyId,
-								payee: response.message.Order.UserId,
-							};
-							if (res.orderStatus !== 'APPROVED') {
-								reject(res);
-							} else {
-								accept(res);
-							}
-						} catch (error) {
-							reject(error);
-						}
-						window.removeEventListener('message', handler);
+		.then((authData) => {
+			accessToken = authData.message.AccessToken;
+			txOptions.headers.Authorization = `Bearer ${accessToken}`;
+			fetch(txUrl, txOptions)
+				.then((res) => {
+					return res.json();
+				})
+				.then((data) => {
+					if (!newWindow) {
+						return new Promise((accept, reject) => {
+							reject('Window closed');
+						});
 					}
-				};
-				window.addEventListener('message', handler);
-			});
+					newWindow.location.assign(`${CHECKOUT_URL}${data.message.OrderId}`);
+					if (window.focus) {
+						newWindow.focus();
+					}
+					return new Promise(async (accept, reject) => {
+						const handler = async (e) => {
+							if (CHECKOUT_URL.includes(e.origin)) {
+								try {
+									let url = `${API_URL}merchant/order-details/${data.message.OrderId}`;
+									let options = {
+										method: 'GET',
+										headers: {
+											Authorization: `Bearer ${accessToken}`,
+											Accept: 'application/json',
+											'Content-Type': 'application/json',
+										},
+									};
+
+									let response = await (await fetch(url, options)).json();
+									let res = {
+										orderId: response.message.Order.OrderId,
+										orderStatus: response.message.Order.Status,
+										amount: response.message.Order.Amount,
+										currency: response.message.Order.CurrencyId,
+										payee: response.message.Order.UserId,
+									};
+									if (res.orderStatus !== 'APPROVED') {
+										reject(res);
+									} else {
+										accept(res);
+									}
+								} catch (error) {
+									reject(error);
+								}
+								window.removeEventListener('message', handler);
+							}
+						};
+						window.addEventListener('message', handler);
+					});
+				})
 		})
 		.catch((error) => {
 			console.error(error);
