@@ -11,20 +11,24 @@ Using jsDelivr CDN:
 ```
 ### Usage
 ```js
-let accessToken = await authorize(
-			process.env.REACT_APP_NUME_CLIENT_ID,
-			process.env.REACT_APP_NUME_CLIENT_SECRET
-		);
-		const payload = {
-			accessToken: accessToken,
-			referenceId: 'ref',
-			amountUsd: 20.5,
-			products: [
-				{
-					skuId: 'he',
-					count: 4,
-				},
-			],
-		};
-const res = await checkoutWithNume(payload);
+const payload = {
+	referenceId: 'ref',
+	amountUsd: 20.5,
+	products: [
+		{
+			skuId: 'he',
+			count: 4,
+		},
+	],
+	clientId: process.env.REACT_APP_NUME_CLIENT_ID,
+	clientSecret: process.env.REACT_APP_NUME_CLIENT_SECRET
+};
+checkoutWithNume(payload).then((res) => {
+	console.log(res);
+	if (res.orderStatus === 'APPROVED') {
+		window.location.href = 'success';
+	}
+}).catch((err) => {
+	console.log(err);
+});
 ```

@@ -1,4 +1,3 @@
-
 const API_URL = 'https://dev.api.numecrypto.com/api/';
 const CHECKOUT_URL = 'https://dev.checkout.numecrypto.com/';
 
