@@ -7,20 +7,18 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
-        "Nume"
+        "Nume",
+        "NumePay",
+        "Checkout"
     ],
     "author": "Nume",
     "license": "ISC",
-    "dependencies": {
-        "axios": "^0.26.1",
-        "nume-pay-uat": "^1.1.36"
-    },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nume-crypto/nume-npm.git"
+        "url": "git+https://github.com/nume-crypto/numepay-checkout.git"
     },
     "bugs": {
-        "url": "https://github.com/nume-crypto/nume-npm/issues"
+        "url": "https://github.com/nume-crypto/numepay-checkout/issues"
     },
-    "homepage": "https://github.com/nume-crypto/nume-npm#readme"
+    "homepage": "https://github.com/nume-crypto/numepay-checkout#readme"
 }
