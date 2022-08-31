@@ -58,7 +58,6 @@ const handlePopover = (e) => {
 	let popover = document.querySelector('.nume-checkout-popover');
 	let helperIcon = document.querySelector('.nume-checkout-helper-icon');
 	const isClosestPopover = e.target.closest('.nume-checkout-popover');
-	console.log(e.target)
 	if (!isClosestPopover) {
 		setTimeout(function () {
 			popover.style.display = 'none';

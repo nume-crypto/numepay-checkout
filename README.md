@@ -7,7 +7,8 @@ npm install nume-pay
 ```
 Using jsDelivr CDN:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/nume-pay"></script>	
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nume-pay/index.css"/>
+<script src="https://cdn.jsdelivr.net/npm/nume-pay"></script>
 ```
 ### Usage
 ```js
