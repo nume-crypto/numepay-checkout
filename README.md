@@ -11,8 +11,8 @@ Using jsDelivr CDN:
 ```
 ### Usage
 ```js
-import 'nume-pay-uat/index.css'
-const { checkoutWithNume, renderBtn } = require('nume-pay-uat');
+import 'nume-pay/index.css'
+const { checkoutWithNume, renderBtn } = require('nume-pay');
 
 const handleSubmit = () => {
 	const payload = {
@@ -42,3 +42,9 @@ const handleSubmit = () => {
 renderBtn('#nume-pay-checkout', {full: true, onSubmit: handleSubmit})
 
 ```
+#### Checkout button options
+|Property|Description|
+|--------|---------|
+|onSubmit `function`|Required: `true`. Function to call on button click|
+|full `boolean`|Default: `false`. Button full text|
+|helperText `boolean`|Default: `false`. Bottom helper text|
