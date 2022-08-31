@@ -36,7 +36,7 @@
     margin-top: 4px;
     font-size: 12px;
     justify-content: center;
-    width: 205px
+    width: 205px;
 }
 
 .nume-checkout-helper-icon {
@@ -72,8 +72,11 @@
     background-color: #fff;
     position: absolute;
     right: 56px;
-    top: 0px;
+    top: -1px;
     border-left: 1px solid #5155D4;
     border-top: 1px solid #5155D4;
     transform: translate(-50%, -50%) rotate(45deg);
+}
+.nume-checkout-container{
+    width: max-content;
 }
