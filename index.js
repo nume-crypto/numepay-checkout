@@ -111,6 +111,7 @@ const authorize = async (clientId, clientSecret) => {
 	const response = await (await fetch(url, options)).json();
 	return response.message.AccessToken;
 };
+
 const checkoutWithNume = (payload) => {
 	let authorizeUrl = `${API_URL}merchant/oauth/token`;
 	let authorizeOptions = {
@@ -148,7 +149,7 @@ const checkoutWithNume = (payload) => {
 		.then((authData) => {
 			accessToken = authData.message.AccessToken;
 			txOptions.headers.Authorization = `Bearer ${accessToken}`;
-			fetch(txUrl, txOptions)
+			return fetch(txUrl, txOptions)
 				.then((res) => {
 					return res.json();
 				})
@@ -206,6 +207,7 @@ const checkoutWithNume = (payload) => {
 			});
 		});
 };
+
 const renderBtn = (query, options = {}) => {
 	let numeCheckoutDiv = document.querySelector(query);
 	numeCheckoutDiv.style.position = 'relative';
@@ -221,6 +223,7 @@ const renderBtn = (query, options = {}) => {
         gas-free wherever NumePay is accepted at checkout. <span class="nume-checkout-learn-more">Learn More</span>
         <div class="nume-popover-arrow"></div>
     </div>`;
+	document.querySelector('.nume-checkout-btn').onclick = options.onSubmit
 	document.addEventListener('click', handlePopover);
 };
 

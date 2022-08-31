@@ -1,4 +1,4 @@
-# nume-npm
+# NumePay Checkout
 
 ## Installing
 Using npm 
@@ -39,6 +39,6 @@ const handleSubmit = () => {
 
 // Render NumePay Checkout button
 <div id="nume-pay-checkout"></div>
-renderBtn('#nume-pay-checkout')
+renderBtn('#nume-pay-checkout', {full: true, onSubmit: handleSubmit})
 
 ```
