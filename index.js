@@ -200,18 +200,22 @@ const renderBtn = (query, options = {}) => {
 				<span class="nume-checkout-btn-txt-main"> NumePay </span>
 				${options.full ? '<span class="nume-checkout-btn-txt-side">Checkout</span>' : ''}
 			</button>
-			<p class="nume-checkout-helper-txt">Shop with crypto - Zero fees <span class="nume-checkout-helper-icon">${helperIconSvg}</span></p>
+			${options.helperText ? (
+			`<p class="nume-checkout-helper-txt">Shop with crypto - Zero fees <span class="nume-checkout-helper-icon">${helperIconSvg}</span></p>
 			<div class="nume-checkout-popover">
 				<!-- HACKY FIX FOR POPOVER -->
 				<div style="padding:20px;width: 305px;position: absolute;z-index: 2;top: -30px;"></div>
 				Make crypto purchases without any transaction fees. Get the NumePay wallet, load in some funds and pay
 				gas-free wherever NumePay is accepted at checkout. <span class="nume-checkout-learn-more">Learn More</span>
 				<div class="nume-popover-arrow"></div>
-			</div>
+			</div>`
+		) : ''}
 		</div>`;
 	document.querySelector('.nume-checkout-btn').onclick = options.onSubmit
-	document.querySelector('.nume-checkout-helper-icon').onclick = showPopOver
-	document.addEventListener('mouseover', handlePopover);
+	if (options.helperText) {
+		document.querySelector('.nume-checkout-helper-icon').onclick = showPopOver
+		document.addEventListener('mouseover', handlePopover);
+	}
 };
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 	module.exports = { authorize, checkoutWithNume, renderBtn };
