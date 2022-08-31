@@ -12,7 +12,8 @@
     "author": "Nume",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.26.1"
+        "axios": "^0.26.1",
+        "nume-pay-uat": "^1.1.36"
     },
     "repository": {
         "type": "git",
